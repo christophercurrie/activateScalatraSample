@@ -25,7 +25,7 @@ trait SimplePrivateOk extends Serializable {
 
 case class MyTestOk(var name: String) extends SimplePrivateOk
 
-class SimpleServlet extends ScalatraServlet with JacksonJsonSupport {
+class SerializationServlet extends ScalatraServlet with JacksonJsonSupport {
   protected implicit def jsonFormats: Formats = DefaultFormats + FieldSerializer[AnyRef]()
 
   before() {
@@ -40,8 +40,8 @@ class SimpleServlet extends ScalatraServlet with JacksonJsonSupport {
 }
 
 @RunWith(classOf[JUnitRunner])
-class SimpleServletTest extends ScalatraFunSuite with MockitoSugar with BeforeAndAfter {
-  addServlet(new SimpleServlet, "/*")
+class SerializationTest extends ScalatraFunSuite with MockitoSugar with BeforeAndAfter {
+  addServlet(new SerializationServlet, "/*")
   test("Correct result") {
     get("/ok", headers = Map("Content-Type" -> "application/json")) {
       status should equal(200)
