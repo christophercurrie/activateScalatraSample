@@ -10,7 +10,6 @@ resolvers += "Activate Framework" at "http://fwbrasil.net/maven/"
 
 resolvers += "typesafe" at "http://repo.typesafe.com/typesafe/repo/"
 
-resolvers += "Web plugin repo" at "http://siasia.github.com/maven2"
 
 libraryDependencies ++= Seq(
     "net.fwbrasil" %% "activate-jdbc" % "1.2.1",
