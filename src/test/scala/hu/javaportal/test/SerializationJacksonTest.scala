@@ -9,6 +9,13 @@ import h2Context._
 import com.fasterxml.jackson.databind.{DeserializationFeature, SerializationFeature, PropertyNamingStrategy, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import java.io.StringWriter
+import java.util.HashMap
+import net.fwbrasil.activate.entity.Var
+import com.fasterxml.jackson.annotation.JsonIgnore
+
+abstract class MixIn {
+  @JsonIgnore var _varsMap: java.util.HashMap[String, Var[Any]] = null
+}
 
 object JsonSupport {
   val jsonMapper = new ObjectMapper {
@@ -17,6 +24,7 @@ object JsonSupport {
     configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true)
     configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true)
+    addMixInAnnotations(classOf[Test], classOf[MixIn])
   }
 
   def parse[T](value: String)(implicit m: scala.Predef.Manifest[T]): Option[T] = {
